@@ -2,6 +2,8 @@ import os
 import modules.toEpubTemplate as toEpubTemplate
 import shutil
 import requests
+from io import BytesIO
+from PIL import Image
 from modules.heads import heads
 
 localaddress = os.getcwd() + "\\output"
@@ -21,9 +23,8 @@ def creatImg(src,url):
     # while i <3:
         try:
             response = requests.get(url, headers = heads(), stream=True, timeout=(5,20))
-            with open('./output/catch/EPUB' + src, 'wb') as f:
-                f.write(response.raw.read())
-            return
+            _img = Image.open(BytesIO(response.content)).convert('RGB')
+            _img.save('./output/catch/EPUB' + src,'jpeg')
         except requests.exceptions.RequestException as e:
             # i += 1
             # print('      下载超时！正在尝试重新下载 | 当前重试次数为第 ' + str(i) + ' 次')
