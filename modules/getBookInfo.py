@@ -75,7 +75,7 @@ def getBookInfo(url,heads):
         bookinfo['titleList'].append(t2sconvert(_title.xpath('string(.)')))
 
     seniorTitles = html.xpath('//*[@id="chapterList"]/p[@class="non"]/following-sibling::a[1]/preceding-sibling::p[1]/descendant-or-self::*[text()]/text()')
-    seniorTitlesNext = html.xpath('//*[@id="chapterList"]/p[@class="non"]/following-sibling::a[1]/@href')
+    seniorTitlesNext = html.xpath('//*[@id="chapterList"]/p[@class="non" and descendant-or-self::text()]/following-sibling::a[1]/@href')
     links = html.xpath('//*[@id="chapterList"]/a/@href')
     for _link in links:
         if _link in seniorTitlesNext:

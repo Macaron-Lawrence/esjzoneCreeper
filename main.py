@@ -16,5 +16,5 @@ def main(src):
     print('>> 程序运行完成！')
 
 if __name__ == "__main__":
-    # main('https://www.esjzone.cc/detail/1604544501.html')
+    # main('https://www.esjzone.cc/detail/1580565850.html')
     main(sys.argv[1])
