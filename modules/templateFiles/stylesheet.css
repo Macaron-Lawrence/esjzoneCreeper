@@ -1,0 +1,43 @@
+body {margin-left:2%;
+    margin-right:2%;
+    margin-top:2%;
+    margin-bottom:2%;}
+
+
+p {
+    /*text-indent: .3in;
+    margin-left:0;
+    margin-right:0;
+    margin-top:0;
+    margin-bottom:0; */
+    text-align: justify;}
+
+
+h1 { text-align: center;}
+h2 { text-align: center;}
+h3 { text-align: center;}
+
+
+.CI {
+    text-align:center;
+    margin-top:0px;
+    margin-bottom:0px;
+    padding:0px;
+    }
+
+.center   {text-align: center;}
+.smcap    {font-variant: small-caps;}
+.u        {text-decoration: underline;}
+.bold     {font-weight: bold;}
+
+
+.poem { margin-left: 3em;
+      margin-right: 3em; }
+
+.chap_title  {
+    text-align: left;
+}
+
+.p_img{
+    text-align:center;
+}
