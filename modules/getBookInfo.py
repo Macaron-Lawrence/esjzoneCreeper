@@ -45,7 +45,7 @@ def getBookInfo(url,heads):
             print(e.reason)
 
     def listifempty(arr):
-        if arr:
+        if not(arr):
             return ['']
         else:
             return arr
@@ -59,7 +59,7 @@ def getBookInfo(url,heads):
     bookinfo["webraw"] = listifempty(html.xpath('//div[@class="offcanvas-wrapper"]/section/div/div[1]/div[1]/div[2]/ul/li[5]/a/text()'))[0]
     bookinfo["booksraw"] = listifempty(html.xpath('//div[@class="offcanvas-wrapper"]/section/div/div[1]/div[1]/div[2]/ul/li[6]/a/text()'))[0]
     bookinfo["uploadDate"] = html.xpath('//div[@class="offcanvas-wrapper"]/section/div/div[1]/div[1]/div[2]/ul/li[7]/text()')[0]
-    bookinfo["score"] = html.xpath('//div[@class="offcanvas-wrapper"]/section/div/div[1]/div[1]/div[1]/div[2]/div[1]/text()')[0]
+    bookinfo["score"] = listifempty(html.xpath('//div[@class="offcanvas-wrapper"]/section/div/div[1]/div[1]/div[1]/div[2]/div[1]/text()'))[0]
     bookinfo["link"]= url
     bookinfo["cover"] = html.xpath('//div[@class="offcanvas-wrapper"]/section/div/div[1]/div[1]/div[1]/div[1]/a/@href')
     tags = html.xpath('//div[@class="offcanvas-wrapper"]/section/div/div[2]/section/a/text()')

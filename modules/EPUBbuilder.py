@@ -5,7 +5,8 @@ import requests
 from io import BytesIO
 from PIL import Image
 from modules.heads import heads
-
+from modules.templateParser import apply
+import math
 localaddress = os.getcwd() + "\\output"
 File_Path1 = localaddress + '\\catch\\EPUB\\META-INF'
 File_Path2 = localaddress + "\\catch\\EPUB\\OEBPS\\images"
@@ -25,6 +26,9 @@ def creatImg(src,url):
             response = requests.get(url, headers = heads(), stream=True, timeout=(5,20))
             _img = Image.open(BytesIO(response.content)).convert('RGB')
             _img.save('./output/catch/EPUB' + src,'jpeg')
+            print(_img.size)
+            (x,y) = _img.size
+            return x,y
         except requests.exceptions.RequestException as e:
             # i += 1
             # print('      下载超时！正在尝试重新下载 | 当前重试次数为第 ' + str(i) + ' 次')
@@ -41,11 +45,18 @@ def fileGenerator(bookinfo):
     for element in bookinfo.values():
         creatFile(element['src'],element['content'])
     print('    正在下载封面')
-    creatImg('/OEBPS/images/cover.jpg',bookinfo['mimetype']['coverlink'][0])
+    (coverwidth, coverheight) = creatImg('/OEBPS/images/cover.jpg',bookinfo['mimetype']['coverlink'][0])
     _images = bookinfo['mimetype']['images']
     for i in range(0,len(_images)):
         print('    正在下载插图: url = ' +  _images[i])
         creatImg('/OEBPS/images/img_'+ str(i) +'.jpg', _images[i])
+    coverratio = max(min(coverwidth/1200,coverheight/1200),1)
+    (_coverwidth,_coverheight) = (math.floor(coverwidth*coverratio),math.floor(coverheight*coverratio))
+    coverguilde = apply('coverguide.xhtml', {
+        'width': str(_coverwidth),
+        'height' : str(_coverheight)
+    })
+    creatFile('/OEBPS/coverguide.xhtml',coverguilde)
     shutil.make_archive(localaddress + '\\output_catch','zip', localaddress + '\\catch\\EPUB')
     shutil.move(localaddress + '\\output_catch.zip',localaddress + '\\' + bookinfo['mimetype']['title'] + '.epub')
     shutil.rmtree(localaddress + '\\catch\\EPUB')
