@@ -27,7 +27,7 @@ def main(_src):
         BOOK = getContent(getBookInfo(src, heads(),cover),heads())
         EPUBgenerator(BOOK)
     # print(getBookInfo(src, heads()))
-    print('>> 程序运行完成！')
+    print('>> 运行结束！')
 
 if __name__ == "__main__":
     # main('https://www.esjzone.cc/detail/1580565850.html')

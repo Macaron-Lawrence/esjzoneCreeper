@@ -1,4 +1,6 @@
 import os
+
+from requests import exceptions
 import modules.toEpubTemplate as toEpubTemplate
 import shutil
 import requests
@@ -24,11 +26,15 @@ def creatImg(src,url):
     # while i <3:
         try:
             response = requests.get(url, headers = heads(), stream=True, timeout=(5,20))
-            _img = Image.open(BytesIO(response.content)).convert('RGB')
+            if  response.status_code == 200:
+                _img = Image.open(BytesIO(response.content)).convert('RGB')
+            else:
+                _img = Image.open('./modules/templateFiles/error_404.jpg',mode='r')
+                print('      404：获取图片失败')
             _img.save('./output/catch/EPUB' + src,'jpeg')
             (x,y) = _img.size
             return x,y
-        except requests.exceptions.RequestException as e:
+        except Exception as e:
             # i += 1
             # print('      下载超时！正在尝试重新下载 | 当前重试次数为第 ' + str(i) + ' 次')
             print(e)

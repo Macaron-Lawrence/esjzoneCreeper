@@ -12,7 +12,7 @@ def t2sconvert(txt):
     txt = conv.convert(txt)
     conv = opencc.OpenCC('t2s.json')
     txt = conv.convert(txt)
-    return txt
+    return txt.replace('&','&amp;').replace('<','&lt;').replace('>','&gt;').replace("'",'&apos;').replace('"','&quot;')
 
 def selectStrAndImg(element,_imgcount,bookinfo):
     _o = ''
