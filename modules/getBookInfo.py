@@ -69,9 +69,9 @@ def getBookInfo(url,heads,cover):
     for _tags in tags:
         bookinfo['tags'].append(t2sconvert(_tags))
 
-    intro = html.xpath('//*[@id="details"]/div/div/div/p/text()')
+    intro = html.xpath('//*[@id="details"]/div/div/div/p')
     for _intro in intro:
-            bookinfo['intro'].append(t2sconvert(_intro))
+            bookinfo['intro'].append(t2sconvert(_intro.xpath('string(.)')))
 
     titles = html.xpath('//*[@id="chapterList"]/a[contains(@href,"https://www.esjzone.cc/forum/")]')
     for _title in titles:
