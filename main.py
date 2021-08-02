@@ -1,3 +1,5 @@
+#<%- 程序作者：喵卡龙>
+
 import urllib.parse
 import urllib.error
 import sys
