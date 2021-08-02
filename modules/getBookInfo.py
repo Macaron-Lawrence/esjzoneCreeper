@@ -11,7 +11,7 @@ def t2sconvert(txt):
     txt = conv.convert(txt)
     return txt
 
-def getBookInfo(url,heads):
+def getBookInfo(url,heads,cover):
     request = urllib.request.Request(url, headers = heads)
     html = ""
     bookinfo = {
@@ -61,7 +61,10 @@ def getBookInfo(url,heads):
     bookinfo["uploadDate"] = html.xpath('//div[@class="offcanvas-wrapper"]/section/div/div[1]/div[1]/div[2]/ul/li[7]/text()')[0]
     bookinfo["score"] = listifempty(html.xpath('//div[@class="offcanvas-wrapper"]/section/div/div[1]/div[1]/div[1]/div[2]/div[1]/text()'))[0]
     bookinfo["link"]= url
-    bookinfo["cover"] = html.xpath('//div[@class="offcanvas-wrapper"]/section/div/div[1]/div[1]/div[1]/div[1]/a/@href')
+    if cover:
+        bookinfo["cover"] = cover
+    else:
+        bookinfo["cover"] = html.xpath('//div[@class="offcanvas-wrapper"]/section/div/div[1]/div[1]/div[1]/div[1]/a/@href')[0]
     tags = html.xpath('//div[@class="offcanvas-wrapper"]/section/div/div[2]/section/a/text()')
     for _tags in tags:
         bookinfo['tags'].append(t2sconvert(_tags))

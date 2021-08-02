@@ -8,15 +8,27 @@ from modules.heads import heads
 from modules.getContent import getContent
 from modules.EPUBbuilder import EPUBgenerator
 
+def argcheck(arr):
+    if len(arr) ==3:
+        return arr[1],arr[2]
+    elif len(arr) == 2:
+        return arr[1],None
+    elif len(arr) == 1:
+        print('>> 未传递URL，请重试!')
+        return False
+    else:
+        print('>> 传递参数过多，请重试!')
+        return False
 
-
-def main(src):
-    print('>> 正在收集必要信息')
-    BOOK = getContent(getBookInfo(src, heads()),heads())
-    EPUBgenerator(BOOK)
+def main(_src):
+    if argcheck(_src):
+        (src, cover) = argcheck(_src)
+        print('>> 正在收集必要信息')
+        BOOK = getContent(getBookInfo(src, heads(),cover),heads())
+        EPUBgenerator(BOOK)
     # print(getBookInfo(src, heads()))
     print('>> 程序运行完成！')
 
 if __name__ == "__main__":
     # main('https://www.esjzone.cc/detail/1580565850.html')
-    main(sys.argv[1])
+    main(sys.argv)

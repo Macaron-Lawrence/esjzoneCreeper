@@ -26,7 +26,6 @@ def creatImg(src,url):
             response = requests.get(url, headers = heads(), stream=True, timeout=(5,20))
             _img = Image.open(BytesIO(response.content)).convert('RGB')
             _img.save('./output/catch/EPUB' + src,'jpeg')
-            print(_img.size)
             (x,y) = _img.size
             return x,y
         except requests.exceptions.RequestException as e:
@@ -45,12 +44,12 @@ def fileGenerator(bookinfo):
     for element in bookinfo.values():
         creatFile(element['src'],element['content'])
     print('    正在下载封面')
-    (coverwidth, coverheight) = creatImg('/OEBPS/images/cover.jpg',bookinfo['mimetype']['coverlink'][0])
+    (coverwidth, coverheight) = creatImg('/OEBPS/images/cover.jpg',bookinfo['mimetype']['coverlink'])
     _images = bookinfo['mimetype']['images']
     for i in range(0,len(_images)):
         print('    正在下载插图: url = ' +  _images[i])
         creatImg('/OEBPS/images/img_'+ str(i) +'.jpg', _images[i])
-    coverratio = max(min(coverwidth/1200,coverheight/1200),1)
+    coverratio = min(min(1200/coverwidth,1200/coverheight),1)
     (_coverwidth,_coverheight) = (math.floor(coverwidth*coverratio),math.floor(coverheight*coverratio))
     coverguilde = apply('coverguide.xhtml', {
         'width': str(_coverwidth),
